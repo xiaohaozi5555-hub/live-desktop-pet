@@ -1,0 +1,232 @@
+/* 控制台窗口样式。深色、低饱和，跟桌宠立绘的暗色调一致；强调色取立绘上的粉。 */
+:root {
+  --bg: #14141a;
+  --panel: #1c1c25;
+  --panel-2: #23232e;
+  --line: #2e2e3b;
+  --text: #e9e7f0;
+  --muted: #8e8ba3;
+  --accent: #ff6b9d;
+  --accent-dim: #a8426a;
+  --ok: #4ad991;
+  --warn: #e8b84b;
+  --off: #4a4a5c;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.6 "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ---- 顶栏 ---- */
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  -webkit-app-region: drag;            /* 整条顶栏可拖动窗口 */
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .5px; }
+.brand .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.chips { display: flex; gap: 8px; -webkit-app-region: no-drag; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 20px;
+  background: var(--panel-2); border: 1px solid var(--line);
+  font-size: 12px; color: var(--muted);
+}
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--off); }
+.chip.on { color: var(--text); }
+.chip.on i { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.chip.busy i { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+
+/* ---- 布局 ---- */
+main {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 14px;
+  padding: 14px;
+  height: calc(100% - 52px);
+}
+.pane {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.pane-ctrl { overflow-y: auto; }
+.pane-title {
+  font-size: 12px; color: var(--muted); letter-spacing: 1px;
+  margin: 0 0 10px; text-transform: none;
+}
+.pane-ctrl .pane-title:not(:first-child) { margin-top: 18px; }
+
+/* ---- 对话 ---- */
+#chatlog {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: text;
+}
+.msg { max-width: 82%; padding: 9px 13px; border-radius: 14px; word-break: break-word; }
+.msg.me   { align-self: flex-end; background: var(--accent-dim); border-bottom-right-radius: 4px; }
+.msg.pet  { align-self: flex-start; background: var(--panel-2); border-bottom-left-radius: 4px; }
+.msg.sys  { align-self: center; background: transparent; color: var(--muted); font-size: 12px; padding: 2px; }
+.msg .who { display: block; font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+
+#chatform { display: flex; gap: 8px; margin-top: 12px; }
+/* 本场观众列表：一行一个人，右边三个档位按钮。列表可能很长，限高滚动，别把面板顶爆 */
+#viewerlist { max-height: 190px; overflow-y: auto; margin-bottom: 4px; }
+#viewerlist:empty::after {
+  content: "还没人说话/进场"; color: var(--muted); font-size: 12px;
+}
+.vrow {
+  display: flex; align-items: center; gap: 6px; padding: 4px 6px;
+  border-bottom: 1px solid var(--line);
+}
+.vrow .vname {
+  flex: 1; font-size: 13px; color: var(--text); user-select: text;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* 灯牌等级：数据里自带、能自动判 VIP，所以只做展示不做勾选 */
+.vrow .vfc { font-size: 11px; color: var(--muted); flex: none; }
+.vrow .vfc[data-vip="true"] { color: var(--ok); }
+.vrow button {
+  flex: none; font-size: 11px; padding: 3px 7px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--panel-2); color: var(--muted); cursor: pointer;
+}
+.vrow button[data-on="true"] { background: var(--accent); color: #2a0e18; border-color: var(--accent); }
+
+#walkinput {
+  width: 100%; box-sizing: border-box; margin-bottom: 8px;
+  padding: 10px 13px; border-radius: 9px;
+  background: var(--panel-2); border: 1px solid var(--line);
+  color: var(--text); font-size: 13px; outline: none; user-select: text;
+}
+#walkinput:focus { border-color: var(--accent-dim); }
+#chatinput {
+  flex: 1; padding: 10px 13px; border-radius: 9px;
+  background: var(--panel-2); border: 1px solid var(--line);
+  color: var(--text); font-size: 14px; outline: none;
+  user-select: text;
+}
+#chatinput:focus { border-color: var(--accent-dim); }
+#chatsend {
+  padding: 10px 18px; border: 0; border-radius: 9px;
+  background: var(--accent); color: #2a0e18; font-weight: 600;
+  cursor: pointer;
+}
+#chatsend:disabled { background: var(--off); color: var(--muted); cursor: default; }
+.hint { margin-top: 7px; font-size: 11px; color: var(--muted); }
+
+/* ---- 按钮 ---- */
+.big {
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 12px 14px; border-radius: 10px;
+  background: var(--accent); border: 0; color: #2a0e18;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.big.ghost { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); }
+.big[data-on="true"] { background: var(--ok); color: #06301c; }
+.big-label { font-size: 14px; font-weight: 600; }
+.big-sub { font-size: 11px; opacity: .75; }
+.big:disabled { background: var(--off); color: var(--muted); cursor: default; }
+
+.heard {
+  margin-top: 8px; padding: 8px 11px; border-radius: 8px;
+  background: var(--panel-2); border: 1px solid var(--line);
+  font-size: 12px; color: var(--muted); min-height: 34px;
+  user-select: text; word-break: break-word;
+}
+
+/* 麦克风结果行（侧栏里只留结论，过程走全屏遮罩） */
+.mic-note { margin-top: 8px; font-size: 12px; color: var(--muted); user-select: text; white-space: pre-line; word-break: break-word; }
+.mic-note.bad { color: var(--accent); }
+.mic-note.good { color: var(--ok); }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid button {
+  padding: 9px 4px; border-radius: 8px; cursor: pointer;
+  background: var(--panel-2); border: 1px solid var(--line);
+  color: var(--text); font-size: 13px;
+}
+.grid button:hover { border-color: var(--accent-dim); }
+.grid button:active { background: var(--accent-dim); }
+
+/* ---- 全屏引导遮罩 ---- */
+#micmodal {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(8, 8, 12, .93);
+}
+#micmodal[hidden] { display: none; }
+.mm-card { width: min(560px, 84vw); text-align: center; padding: 8px 20px; }
+.mm-step { font-size: 13px; color: var(--muted); letter-spacing: 2px; }
+.mm-say {
+  margin: 14px 0 6px; font-size: 30px; font-weight: 700; line-height: 1.45;
+  color: var(--accent); word-break: break-word;
+}
+.mm-count { height: 46px; font-size: 38px; font-weight: 700; color: var(--text); }
+.mm-meter {
+  height: 12px; margin: 10px 0 12px; border-radius: 6px;
+  background: #0d0d13; border: 1px solid var(--line); overflow: hidden;
+}
+.mm-meter span {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--ok) 0%, var(--ok) 55%, var(--warn) 80%, var(--accent) 100%);
+  transition: width .1s linear;
+}
+.mm-note { min-height: 42px; font-size: 14px; color: var(--muted); white-space: pre-line; }
+.mm-note.bad  { color: var(--accent); }
+.mm-note.good { color: var(--ok); }
+#mmstop {
+  margin-top: 12px; padding: 9px 26px; border-radius: 9px; cursor: pointer;
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--text); font-size: 14px;
+}
+#mmstop:hover { border-color: var(--accent-dim); }
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* 弹幕断流告警条。2026-08-02 那场断了 58 分钟主播全程不知情，所以这条要够显眼：
+   整幅横在顶栏下面 + 呼吸动画，不做成角落里的小字。 */
+#danmaku-alert {
+  padding: 10px 16px;
+  background: var(--accent-dim);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: .3px;
+  animation: danmaku-alert-pulse 2s ease-in-out infinite;
+}
+@keyframes danmaku-alert-pulse {
+  0%, 100% { background: var(--accent-dim); }
+  50%      { background: var(--accent); }
+}

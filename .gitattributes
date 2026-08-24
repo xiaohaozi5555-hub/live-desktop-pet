@@ -1,0 +1,5 @@
+# Windows 批处理必须是 CRLF 换行。踩过：用 LF 写的 .cmd 会被 cmd.exe 逐行解析错乱，
+# 连 REM 注释都会漏出来当命令执行，报一堆 "xxx is not recognized"，看不出真正原因。
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.vbs text eol=crlf

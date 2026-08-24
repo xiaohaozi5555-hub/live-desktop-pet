@@ -1,0 +1,6 @@
+{"msg_type":"member","user":{"nick_name":"夜行猫","open_id":"oid_001"},"timestamp":1751856000000}
+{"msg_type":"comment","user":{"nick_name":"胆小鬼本鬼","open_id":"oid_002"},"content":"哈哈哈哈太逗了","timestamp":1751856001000}
+{"msg_type":"like","user":{"nick_name":"夜行猫","open_id":"oid_001"},"like_count":20,"timestamp":1751856002000}
+{"msg_type":"gift","user":{"nick_name":"路过的骑士","open_id":"oid_003"},"gift_name":"小心心","gift_id":"1001","gift_count":1,"diamond_count":10,"timestamp":1751856003000}
+{"msg_type":"gift","user":{"nick_name":"神秘大哥","open_id":"oid_004"},"gift_name":"嘉年华","gift_id":"9001","gift_count":1,"diamond_count":30000,"timestamp":1751856004000}
+{"msg_type":"social","user":{"nick_name":"胆小鬼本鬼","open_id":"oid_002"},"timestamp":1751856005000}

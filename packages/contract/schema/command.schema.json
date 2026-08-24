@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CommandMessage",
+  "type": "object",
+  "required": ["channel", "type", "ts", "data"],
+  "properties": {
+    "channel": { "const": "command" },
+    "type": {
+      "type": "string",
+      "enum": ["mute", "unmute", "sleep", "wake", "do", "mode", "calibrate", "set_viewer_tier", "stream_start", "stream_end"]
+    },
+    "ts": { "type": "integer" },
+    "source": { "type": "string" },
+    "data": { "type": "object" }
+  }
+}

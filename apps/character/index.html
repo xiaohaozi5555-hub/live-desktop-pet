@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>直播桌宠</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="stage">
+    <div id="bubble" role="status" aria-live="polite"><span id="bubble-text"></span></div>
+
+    <!-- AI 生成的透明逐帧角色：#pet-root 记录当前表情，#character 记录动作状态。
+         两张 <img> 只用于状态切换淡入淡出，同一动作的连续帧会直接硬切，避免重影。 -->
+    <div id="pet-root" class="e-neutral">
+      <div id="character" class="m-idle">
+        <img class="art-layer active" data-layer="a" alt="" />
+        <img class="art-layer" data-layer="b" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 双击桌宠打开/关闭；见 dev-tools.js -->
+  <div id="debug" hidden>
+    <div class="dbg-row" id="dbg-motions"></div>
+    <div class="dbg-row" id="dbg-actions"></div>
+  </div>
+
+  <audio id="voice"></audio>
+  <script src="state-packs/agent-01-ambient.js"></script>
+  <script src="state-packs/agent-02-reactions.js"></script>
+  <script src="state-packs/agent-03-social.js"></script>
+  <script src="state-registry.js"></script>
+  <script src="action-map.js"></script>
+  <script src="renderer.js"></script>
+  <script src="dev-tools.js"></script>
+</body>
+</html>

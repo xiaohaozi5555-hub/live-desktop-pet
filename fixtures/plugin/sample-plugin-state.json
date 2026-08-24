@@ -1,0 +1,10 @@
+{
+  "raw_ocr": {
+    "countdown_text": "距离下播 00:30:00",
+    "prank_text": "被整蛊次数: 7"
+  },
+  "parsed": {
+    "countdown_sec": 1800,
+    "prank_count": 7
+  }
+}

@@ -1,0 +1,91 @@
+html, body { margin: 0; padding: 0; background: transparent; overflow: hidden;
+  font-family: "Microsoft YaHei", system-ui, sans-serif; user-select: none;
+  -webkit-app-region: drag; }
+#stage { position: relative; width: 268px; height: 348px; display: flex; align-items: flex-end; justify-content: center; }
+
+/* 角色：#character 是动作(m-*)动画的挂载点，内部两张 <img> 叠层切图做淡入淡出 */
+#character { position: relative; width: 214px; height: 262px; transform-origin: 50% 92%;
+  filter: drop-shadow(0 6px 10px rgba(60,40,100,.28)); }
+.art-layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  opacity: 0; transition: opacity .28s ease; }
+.art-layer.active { opacity: 1; }
+
+/* 说话时给当前插画一点轻微缩放脉动，替代逐帧口型 */
+.talking .art-layer.active { animation: talk-pulse .22s ease-in-out infinite; }
+@keyframes talk-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+/* 所有动作与表情状态均由透明 PNG 逐帧驱动，不再叠加整图位移或装饰特效。 */
+
+/* 动态文字泡：颜色直接取自角色的深夜蓝、奶油白和南瓜橙。 */
+#bubble { --bubble-x: 0px; --bubble-y: 0px; position: absolute; z-index: 2;
+  top: calc(46px + var(--bubble-y)); left: calc(50% + var(--bubble-x)); width: max-content; max-width: 218px;
+  box-sizing: border-box; transform: translate(-50%, 7px) scale(.94); transform-origin: 58% 100%;
+  background: #fffaf4; color: #25243d; border: 2px solid #3f3a57; border-radius: 18px; padding: 8px 14px 9px;
+  font-size: 14px; font-weight: 700; line-height: 1.45; letter-spacing: .02em; text-align: center;
+  white-space: normal; overflow-wrap: anywhere; opacity: 0; visibility: hidden; pointer-events: none;
+  box-shadow: 0 4px 7px rgba(37,36,61,.16);
+  transition: opacity .18s ease-out, transform .18s cubic-bezier(.16,1,.3,1), visibility 0s linear .18s; }
+#bubble.show { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1);
+  transition-delay: 0s; }
+#bubble::after { content: ""; position: absolute; z-index: -1; bottom: -7px; left: 58%; width: 11px; height: 11px;
+  background: #fffaf4; border-right: 2px solid #3f3a57; border-bottom: 2px solid #3f3a57;
+  transform: translateX(-50%) rotate(45deg); }
+#bubble[data-tone="greeting"] { box-shadow: 0 4px 7px rgba(37,36,61,.16); }
+
+/* Long copy and close-up reactions reserve the clear strip above the sprite. */
+#bubble[data-long="true"], #stage[data-state="scared"] #bubble { top: calc(8px + var(--bubble-y)); }
+#bubble[data-placement*="right"]::after { left: 42%; }
+#bubble[data-placement*="left"]::after { left: 68%; }
+
+/* The wink reward is one attached heart, not a cloud of detached particles. */
+#bubble[data-mode="heart"] { top: calc(28px + var(--bubble-y)); width: 96px; height: 76px; max-width: 96px;
+  display: grid; place-items: center; padding: 13px 12px 20px; color: #fffaf4; background: #ef6f8f; border: 0;
+  border-radius: 0; clip-path: polygon(50% 100%, 10% 62%, 2% 43%, 4% 25%, 16% 10%, 33% 7%, 50% 23%, 67% 7%, 84% 10%, 96% 25%, 98% 43%, 90% 62%);
+  box-shadow: none; transform-origin: 50% 80%; }
+#bubble[data-mode="heart"]::after { display: none; }
+
+/* A3-02: one soft heart grows diagonally from the wink eye, then reveals its copy. */
+#bubble[data-mode="heart-grow"] {
+  top: calc(92px + var(--bubble-y)); width: 88px; height: 76px; max-width: 88px;
+  display: grid; place-items: center; padding: 10px 8px 16px; color: #fffaf4; background: #ef6f8f;
+  border: 0; border-radius: 0; box-shadow: none; contain: paint;
+  clip-path: path("M 44 74 C 38 68 6 47 6 25 C 6 10 17 2 30 2 C 37 2 42 6 44 12 C 46 6 51 2 58 2 C 71 2 82 10 82 25 C 82 47 50 68 44 74 Z");
+  transform-origin: 18% 128%;
+}
+#bubble[data-mode="heart-grow"]::after { display: none; }
+#bubble[data-mode="heart-grow"].show {
+  animation: wink-heart-grow var(--heart-grow-duration, 480ms) cubic-bezier(.16,1,.3,1)
+    var(--heart-delay, 120ms) both;
+}
+#bubble[data-mode="heart-grow"] #bubble-text { opacity: 0; transform: scale(.94); }
+#bubble[data-mode="heart-grow"][data-phase="revealed"] #bubble-text {
+  opacity: 1; transform: scale(1); transition: opacity .16s ease-out, transform .16s cubic-bezier(.16,1,.3,1);
+}
+@keyframes wink-heart-grow {
+  0% { opacity: 0; visibility: visible; transform: translate(-50%, 0) scale(.08) rotate(-7deg); }
+  100% { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1) rotate(0); }
+}
+#bubble[data-mode="kiss"]::before { content: "♥"; position: absolute; right: -8px; top: -9px;
+  color: #ef6f8f; font-size: 20px; line-height: 1; transform: rotate(10deg); }
+
+/* Snore/dream text changes in place; the bubble itself only breathes subtly. */
+#bubble[data-mode="snore-cycle"], #bubble[data-mode="snore-or-dream-cycle"] { border-style: solid; }
+#bubble[data-mode="snore-cycle"].show, #bubble[data-mode="snore-or-dream-cycle"].show {
+  animation: snore-breathe .9s ease-in-out infinite; }
+@keyframes snore-breathe {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  50% { transform: translate(-50%, -2px) scale(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-layer, #bubble { transition: none; }
+  #bubble[data-mode="snore-cycle"].show, #bubble[data-mode="snore-or-dream-cycle"].show { animation: none; }
+  #bubble[data-mode="heart-grow"].show { animation: none; opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1); }
+  .talking .art-layer.active { animation: none; }
+}
+
+/* 调试面板（按 D 切换） */
+#debug { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(20,12,30,.86); padding: 6px;
+  -webkit-app-region: no-drag; }
+.dbg-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 3px 0; }
+#debug button { font-size: 11px; padding: 3px 6px; border: 0; border-radius: 5px; background: #7d5cae; color: #fff; cursor: pointer; }

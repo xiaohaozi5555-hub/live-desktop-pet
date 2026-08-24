@@ -1,0 +1,57 @@
+# 依赖（运行时安装，不入库）
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# 构建产物
+dist/
+build/
+out/
+
+# 模型/权重（体积大，运行时下载）
+models/
+weights/
+*.onnx
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+*.npy
+services/perception-voice/voiceprint.npy
+
+# 大素材（保留 .expected.json 标注与说明）
+assets/character/*.png
+assets/character/frames/
+assets/character/*.psd
+assets/character/*.moc3
+assets/character/*.model3.json
+fixtures/vision/*.png
+fixtures/vision/*.jpg
+fixtures/face/*.png
+fixtures/face/*.jpg
+*.wav
+*.mp3
+*.mp4
+
+# 密钥/本地配置
+.env
+*.local
+
+# 运行期缓存（TTS 音频、截图等）
+.cache/
+
+# dialogue 观众画像记忆（SQLite，运行时生成，跨场持久化在本机即可）
+services/dialogue/*.db
+
+# 日志
+*.log
+
+# extract_session_history.py 的产物：含主播原话与观众真实昵称，跟 .cache/grab/ 同一类，不入库
+session-history/
+.env.*
+!.env.example
+.next/
+secrets/
+services/perception-voice/voiceprint.npy*

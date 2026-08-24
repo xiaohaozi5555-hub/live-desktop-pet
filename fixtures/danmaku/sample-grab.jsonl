@@ -1,0 +1,11 @@
+{"Type":101,"ProcessName":"直播伴侣","Data":{"RoomId":1234567890123456789,"WebRoomId":"123456789","RoomTitle":"深夜恐怖游戏"}}
+{"Type":3,"ProcessName":"直播伴侣","Data":{"MsgId":"7650501781802439720","User":{"Id":"110001","Nickname":"夜行的猫","DisplayId":"cat_night","HeadImgUrl":"https://example.invalid/a.jpg","FollowerCount":12},"RoomId":1234567890123456789,"WebRoomId":"123456789","CurrentCount":37,"EnterTipType":0}}
+{"Type":1,"ProcessName":"直播伴侣","Data":{"MsgId":"7650501836256760878","User":{"Id":"110001","Nickname":"夜行的猫","DisplayId":"cat_night","FollowerCount":12},"Content":"主播晚上好","RoomId":1234567890123456789,"WebRoomId":"123456789"}}
+{"Type":2,"ProcessName":"直播伴侣","Data":{"MsgId":"7650501900011122334","User":{"Id":"110002","Nickname":"路过的骑士","DisplayId":"knight_go","FollowerCount":3},"Count":5,"Total":128,"RoomId":1234567890123456789}}
+{"Type":5,"ProcessName":"直播伴侣","Data":{"MsgId":"7650503156794758184","User":{"Id":"110002","Nickname":"路过的骑士","DisplayId":"knight_go","FollowerCount":3},"GiftName":"小心心","GiftCount":1,"RepeatCount":1,"DiamondCount":1,"RoomId":1234567890123456789}}
+{"Type":5,"ProcessName":"直播伴侣","Data":{"MsgId":"7650503156794758999","User":{"Id":"110003","Nickname":"神秘大哥","DisplayId":"mystery_big","FollowerCount":880},"GiftName":"嘉年华","GiftCount":1,"RepeatCount":1,"DiamondCount":30000,"RoomId":1234567890123456789}}
+{"Type":4,"ProcessName":"直播伴侣","Data":{"MsgId":"7650503999000111222","User":{"Id":"110001","Nickname":"夜行的猫","DisplayId":"cat_night","FollowerCount":13},"RoomId":1234567890123456789}}
+{"Type":7,"ProcessName":"直播伴侣","Data":{"MsgId":"7650504111222333444","User":{"Id":"110001","Nickname":"夜行的猫"},"Type":1,"Level":3,"RoomId":1234567890123456789}}
+{"Type":6,"ProcessName":"直播伴侣","Data":{"MsgId":"7650504222333444555","Content":"在线人数统计","RoomId":1234567890123456789}}
+{"Type":8,"ProcessName":"直播伴侣","Data":{"MsgId":"7650504333444555666","User":{"Id":"110002","Nickname":"路过的骑士"},"RoomId":1234567890123456789}}
+{"Type":102,"ProcessName":"直播伴侣","Data":{"RoomId":1234567890123456789,"WebRoomId":"123456789"}}

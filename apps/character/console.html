@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>魔丸 · 控制台</title>
+  <link rel="stylesheet" href="console.css" />
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>魔丸 · 控制台</h1>
+    </div>
+    <div class="chips">
+      <span class="chip" id="chip-bus"><i></i>总线</span>
+      <span class="chip" id="chip-chat"><i></i>对话</span>
+      <span class="chip" id="chip-voice"><i></i>语音</span>
+    </div>
+  </header>
+
+  <!-- 弹幕断流告警条。平时 hidden，断流时整条横在最上面——2026-08-02 那场断了 58 分钟
+       主播全程不知情，小字提示是不够的，必须挡在视线里。 -->
+  <div id="danmaku-alert" hidden></div>
+
+  <main>
+    <!-- 左：对话 -->
+    <section class="pane pane-chat">
+      <div class="pane-title">跟她说话</div>
+      <div id="chatlog" role="log" aria-live="polite"></div>
+      <form id="chatform">
+        <input id="chatinput" type="text" autocomplete="off"
+               placeholder="打字跟魔丸聊天，回车发送…" />
+        <button type="submit" id="chatsend">发送</button>
+      </form>
+      <div class="hint" id="chathint">回复由 AI 生成，可能要等一两秒</div>
+    </section>
+
+    <!-- 右：控制 -->
+    <section class="pane pane-ctrl">
+      <div class="pane-title">语音对话</div>
+      <button class="big" id="voicebtn" data-on="false">
+        <span class="big-label">开启语音识别</span>
+        <span class="big-sub" id="voicesub">用麦克风跟她说话</span>
+      </button>
+      <div class="heard" id="heard">—</div>
+
+      <div class="pane-title">麦克风与声纹</div>
+      <div class="grid grid-2">
+        <button type="button" id="mictest">测试麦克风</button>
+        <button type="button" id="micenroll">重录声纹</button>
+      </div>
+      <div class="mic-note" id="micnote"></div>
+
+      <div class="pane-title">本场观众 · 勾会员/星守护</div>
+      <div class="hint" id="viewerhint">会员和星守护抖音数据里没有，只能你自己勾。灯牌 8 级以上会自动算 VIP，不用勾。</div>
+      <div id="viewerlist"></div>
+
+      <div class="pane-title">卡关求助</div>
+      <input id="walkinput" type="text" autocomplete="off"
+             placeholder="卡在哪？越具体找得越准。游戏名不用写，她能自己认">
+      <button class="big ghost" id="walkbtn">
+        <span class="big-label">帮我找攻略</span>
+        <span class="big-sub">截当前画面 + 联网找，带出处</span>
+      </button>
+      <div class="mic-note" id="walknote"></div>
+
+      <div class="pane-title">直播采集</div>
+      <button class="big ghost" id="chromabtn" data-on="false">
+        <span class="big-label" id="chromalabel">切到绿幕模式</span>
+        <span class="big-sub" id="chromasub">给直播采集用，切换会重启桌宠</span>
+      </button>
+      <div class="mic-note" id="chromanote"></div>
+      <button class="big ghost" id="hidebtn" data-on="false">
+        <span class="big-label" id="hidelabel">把桌宠移出视野</span>
+        <span class="big-sub">挪到屏幕角落只留 1 像素；观众照样能看到</span>
+      </button>
+
+      <div class="pane-title">动作</div>
+      <div class="grid" id="motions"></div>
+
+      <div class="pane-title">状态</div>
+      <div class="grid grid-2" id="states"></div>
+
+      <div class="pane-title">下播</div>
+      <button class="big ghost" id="streamendbtn">
+        <span class="big-label">手动下播</span>
+        <span class="big-sub">真实总结本场主播档案 + 给观众记一场，点一次算一次；中途重启修bug时别点</span>
+      </button>
+    </section>
+  </main>
+
+  <!-- 麦克风测试/声纹重录的全屏引导。这一步是"看提示、立刻开口"的时机操作，
+       侧栏里的小框来不及看见（实测踩过），所以盖满整窗，并且始终可中断。 -->
+  <div id="micmodal" hidden>
+    <div class="mm-card">
+      <div class="mm-step" id="mmstep">准备中</div>
+      <div class="mm-say" id="mmsay">—</div>
+      <div class="mm-count" id="mmcount"></div>
+      <div class="mm-meter"><span id="mmbar"></span></div>
+      <div class="mm-note" id="mmnote">请对着麦克风说话</div>
+      <button type="button" id="mmstop">停止</button>
+    </div>
+  </div>
+
+  <script src="console.js"></script>
+</body>
+</html>

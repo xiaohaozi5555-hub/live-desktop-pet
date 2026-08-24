@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ActionMessage",
+  "type": "object",
+  "required": ["channel", "type", "ts", "data"],
+  "properties": {
+    "channel": { "const": "action" },
+    "type": {
+      "type": "string",
+      "enum": ["play_motion", "set_expression", "show_bubble", "speak", "stop"]
+    },
+    "ts": { "type": "integer" },
+    "source": { "type": "string" },
+    "data": { "type": "object" }
+  }
+}

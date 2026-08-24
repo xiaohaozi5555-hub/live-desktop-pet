@@ -1,0 +1,16 @@
+{
+  "name": "desktop-pet-character",
+  "version": "0.0.1",
+  "private": true,
+  "description": "直播桌宠 表现层：Electron 透明置顶窗，订阅 action.* 渲染角色/气泡/语音",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "demo": "electron . --demo",
+    "capture": "electron . --capture",
+    "verify": "node verify_character.js"
+  },
+  "devDependencies": {
+    "electron": "latest"
+  }
+}
